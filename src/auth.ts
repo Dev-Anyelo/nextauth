@@ -1,11 +1,12 @@
-import { db } from "@/lib/db";
 import NextAuth from "next-auth";
+import { UserRole } from "@prisma/client";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+
+import { db } from "@/lib/db";
 import authConfig from "@/auth.config";
 import { getUserById } from "@/data/user";
-import { UserRole } from "@prisma/client";
-import { getAccoutByUserId } from "@/data/account";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
+import { getAccountByUserId } from "@/data/account";
 
 export const {
   handlers: { GET, POST },
@@ -17,7 +18,6 @@ export const {
     signIn: "/auth/login",
     error: "/auth/error",
   },
-
   events: {
     async linkAccount({ user }) {
       await db.user.update({
@@ -26,18 +26,16 @@ export const {
       });
     },
   },
-
   callbacks: {
     async signIn({ user, account }) {
-      //  Allow OAuth (Google, Github etc...) without email verification
-      if (account?.type !== "credentials") return true;
+      // Allow OAuth without email verification
+      if (account?.provider !== "credentials") return true;
 
       const existingUser = await getUserById(user.id);
 
       // Prevent sign in without email verification
       if (!existingUser?.emailVerified) return false;
 
-      // Two factor confirmation
       if (existingUser.isTwoFactorEnabled) {
         const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
           existingUser.id
@@ -53,8 +51,8 @@ export const {
 
       return true;
     },
-
-    async session({ token, session }) {
+    async session({ session, token }) {
+      console.log({ token, session });
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
@@ -64,29 +62,28 @@ export const {
       }
 
       if (session.user) {
-        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled;
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
       }
 
       if (session.user) {
         session.user.name = token.name;
         session.user.email = token.email;
-        session.user.isOAuth = token.isOuath;
+        session.user.isOAuth = token.isOAuth as boolean;
       }
 
       return session;
     },
-
     async jwt({ token }) {
-
+      
       if (!token.sub) return token;
 
       const existingUser = await getUserById(token.sub);
 
       if (!existingUser) return token;
 
-      const existingAccount = await getAccoutByUserId(existingUser.id);
+      const existingAccount = await getAccountByUserId(existingUser.id);
 
-      token.isOuath = !!existingAccount;
+      token.isOAuth = !!existingAccount;
       token.name = existingUser.name;
       token.email = existingUser.email;
       token.role = existingUser.role;
@@ -95,7 +92,6 @@ export const {
       return token;
     },
   },
-
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
   ...authConfig,
