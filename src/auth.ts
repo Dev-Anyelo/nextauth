@@ -5,8 +5,8 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "@/lib/db";
 import authConfig from "@/auth.config";
 import { getUserById } from "@/data/user";
-import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
 import { getAccountByUserId } from "@/data/account";
+import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
 
 export const {
   handlers: { GET, POST },
@@ -51,8 +51,11 @@ export const {
 
       return true;
     },
-    async session({ session, token }) {
-      console.log({ token, session });
+    async session({ token, session }) {
+      console.log({
+        session,
+      });
+
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
@@ -74,7 +77,6 @@ export const {
       return session;
     },
     async jwt({ token }) {
-      
       if (!token.sub) return token;
 
       const existingUser = await getUserById(token.sub);
@@ -83,11 +85,12 @@ export const {
 
       const existingAccount = await getAccountByUserId(existingUser.id);
 
-      token.isOAuth = !!existingAccount;
       token.name = existingUser.name;
-      token.email = existingUser.email;
       token.role = existingUser.role;
+      token.email = existingUser.email;
+      token.isOAuth = !!existingAccount;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+      token.sub = existingUser.id;
 
       return token;
     },

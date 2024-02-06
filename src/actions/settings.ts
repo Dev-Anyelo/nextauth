@@ -33,24 +33,26 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
     const verificatrionToken = await generateVerificationToken(values.email);
 
     await sendVerificationEmail(
-      verificatrionToken.email, 
+      verificatrionToken.email,
       verificatrionToken.token
     );
 
     return { success: "Verification email sent" };
   }
 
-  if(values.password && values.newPassword && dbUser.password){
-    const passwordsMatch = await bcrypt.compare(values.password, dbUser.password);
+  if (values.password && values.newPassword && dbUser.password) {
+    const passwordsMatch = await bcrypt.compare(
+      values.password,
+      dbUser.password
+    );
 
-    if(!passwordsMatch) return { error: "Incorrect password" };
+    if (!passwordsMatch) return { error: "Incorrect password" };
 
     const hashedPassword = await bcrypt.hash(values.newPassword, 10);
 
     values.password = hashedPassword;
     values.newPassword = undefined;
   }
-
 
   await db.user.update({
     where: { id: user.id },

@@ -9,7 +9,7 @@ import { settings } from "@/actions/settings";
 import { useTransition, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { ClipLoader, SyncLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 import { Input } from "@/components/ui/input";
 import { RefreshCcwIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -38,6 +38,7 @@ import {
 } from "@/components/ui/select";
 
 const SettingsPage = () => {
+  
   const user = useCurrentUser();
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
@@ -48,10 +49,10 @@ const SettingsPage = () => {
   const form = useForm<z.infer<typeof SettingsSchema>>({
     resolver: zodResolver(SettingsSchema),
     defaultValues: {
-      name: user?.name || undefined,
-      email: user?.email || undefined,
       password: undefined,
       newPassword: undefined,
+      name: user?.name || undefined,
+      email: user?.email || undefined,
       role: user?.role || undefined,
       isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
     },

@@ -11,7 +11,6 @@ import {
 export const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
-
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
@@ -20,7 +19,6 @@ export default auth((req) => {
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
 
   if (isApiAuthRoute) return null;
-
 
   // If user is already logged redirect to the default login redirect
   if (isAutRoute) {
