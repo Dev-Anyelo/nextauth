@@ -20,7 +20,7 @@ import {
 
 export const login = async (
   values: z.infer<typeof LoginSchema>,
-  callbackUrl?: string
+  callbackUrl?: string | null,
 ) => {
   const validatedFields = LoginSchema.safeParse(values);
 
