@@ -33,7 +33,7 @@ const UserButton = () => {
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-40 mt-3" align="end">
+      <DropdownMenuContent className="w-40 mt-3 border-none" align="end">
         <DropdownMenuLabel>
           <span>{user?.name}</span>
         </DropdownMenuLabel>
