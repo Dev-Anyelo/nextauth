@@ -38,34 +38,7 @@ const UserButton = () => {
           <span>{user?.name}</span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link href="/profille">
-          <DropdownMenuItem>
-            <UserIcon className="h-4 w-4 mr-2" />
-            Profile
-          </DropdownMenuItem>
-        </Link>
-        <DropdownMenuSeparator />
-        <Link href="/client">
-          <DropdownMenuItem>
-            <UsersIcon className="h-4 w-4 mr-2" />
-            Clients
-          </DropdownMenuItem>
-        </Link>
-        <DropdownMenuSeparator />
-        <Link href="/settings">
-          <DropdownMenuItem>
-            <SettingsIcon className="h-4 w-4 mr-2" />
-            Settings
-          </DropdownMenuItem>
-        </Link>
-        <DropdownMenuSeparator />
-        <Link href="/server">
-          <DropdownMenuItem>
-            <ServerIcon className="h-4 w-4 mr-2" />
-            Server
-          </DropdownMenuItem>
-        </Link>
-        <DropdownMenuSeparator />
+       
         <LogoutButton>
           <DropdownMenuItem>
             <LogOutIcon className="h-4 w-4 mr-2" />

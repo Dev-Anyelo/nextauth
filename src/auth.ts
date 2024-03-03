@@ -52,7 +52,6 @@ export const {
       return true;
     },
     async session({ token, session }: any) {
-      
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
@@ -86,8 +85,8 @@ export const {
       token.role = existingUser.role;
       token.email = existingUser.email;
       token.isOAuth = !!existingAccount;
-      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
       token.sub = existingUser.id;
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
 
       return token;
     },

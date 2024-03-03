@@ -5,6 +5,7 @@ import {
   authRoutes,
   publicRoutes,
   apiAuthPrefix,
+  adminRoute,
   DEFAULT_LOGIN_REDIRECT,
 } from "@/routes";
 
@@ -14,14 +15,24 @@ export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
-  const isAutRoute = authRoutes.includes(nextUrl.pathname);
+  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+  const isAdminRoute = adminRoute.includes(nextUrl.pathname);
 
   if (isApiAuthRoute) return null;
 
+  // if (isAdminRoute) {
+
+  //   if (req.auth?.user.role !== "ADMIN") {
+  //     return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+  //   }
+
+  //   return Response.redirect(new URL("dashboard", nextUrl));
+  // }
+
   // If user is already logged redirect to the default login redirect
-  if (isAutRoute) {
+  if (isAuthRoute) {
     if (isLoggedIn) {
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
     }

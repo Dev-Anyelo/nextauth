@@ -3,15 +3,14 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { RegisterSchema } from "@/schemas";
-import { useTransition, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-
+import { ClipLoader } from "react-spinners";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { FormError } from "@/components/form-errors";
-import { FormSuccess } from "@/components/form-success";
-
 import { register } from "@/actions/register";
+import { Button } from "@/components/ui/button";
+import { useTransition, useState } from "react";
+import { FormError } from "@/components/form-errors";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormSuccess } from "@/components/form-success";
 
 import {
   Form,
@@ -23,7 +22,6 @@ import {
 } from "@/components/ui/form";
 
 import CardWrapper from "@/components/auth/card-wrapper";
-import { ClipLoader } from "react-spinners";
 
 const RegisterForm = () => {
   const [isPending, startTransition] = useTransition();

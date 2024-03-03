@@ -1,8 +1,8 @@
 "use client";
 
 import { UserRole } from "@prisma/client";
-import { useCurrentRole } from "@/hooks/use-current-role";
 import { FormError } from "@/components/form-errors";
+import { useCurrentRole } from "@/hooks/use-current-role";
 
 interface RoleProps {
   children: React.ReactNode;

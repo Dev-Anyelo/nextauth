@@ -1,8 +1,5 @@
-import HeaderComponent from "@/components/auth/header";
-import BackButton from "@/components/auth//back-button";
-import CardWrapper from "@/components/auth/card-wrapper";
 import { FaExclamationTriangle } from "react-icons/fa";
-import { Card, CardHeader, CardFooter } from "@/components/ui/card";
+import CardWrapper from "@/components/auth/card-wrapper";
 
 const ErrorCard = () => {
   return (

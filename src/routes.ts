@@ -4,10 +4,7 @@
  * @type {string[]}
  */
 
-export const publicRoutes = [
-  "/", 
-  "/auth/new-verification"
-];
+export const publicRoutes = ["/", "/auth/new-verification"];
 
 /**
  * An array of routes that are used for authentication,
@@ -30,6 +27,14 @@ export const authRoutes = [
  */
 
 export const apiAuthPrefix = "/api/auth";
+
+/**
+ * This route used only for admin users to access
+ * the dashboard page after logging in
+ * @type {string[]}
+ */
+
+export const adminRoute = "/dashboard";
 
 /**
  * The default redirect path after logging in

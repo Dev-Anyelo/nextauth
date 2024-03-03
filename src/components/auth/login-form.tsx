@@ -8,6 +8,7 @@ import { useTransition, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { ClipLoader } from "react-spinners";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-errors";
@@ -25,7 +26,6 @@ import {
 } from "@/components/ui/form";
 
 import CardWrapper from "@/components/auth/card-wrapper";
-import { ClipLoader, PulseLoader, SyncLoader } from "react-spinners";
 
 const LoginForm = () => {
   const searchParams = useSearchParams();

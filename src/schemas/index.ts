@@ -91,3 +91,36 @@ export const SettingsSchema = z
       path: ["password"],
     }
   );
+
+// Add user schema
+export const CreateUserSchema = z.object({
+  name: z.optional(
+    z.string().min(3, {
+      message: "Name is required",
+    })
+  ),
+  email: z.string().email({
+    message: "Email is required",
+  }),
+  password: z.string().min(6, {
+    message: "Minimum 6 characters required",
+  }),
+  role: z.enum([UserRole.ADMIN, UserRole.USER]),
+  isTwoFactorEnabled: z.optional(z.boolean()),
+});
+
+export const UpdateUserSchema = z.object({
+  name: z.optional(
+    z.string().min(1, {
+      message: "Name is required",
+    })
+  ),
+  email: z.optional(
+    z.string().email({
+      message: "Email is required",
+    })
+  ),
+
+  role: z.enum([UserRole.ADMIN, UserRole.USER]),
+  isTwoFactorEnabled: z.optional(z.boolean()),
+});
