@@ -7,6 +7,7 @@ import { getUserByEmail } from "@/data/user";
 import { CreateUserSchema } from "@/schemas";
 
 export const create = async (values: z.infer<typeof CreateUserSchema>) => {
+  
   const validateFields = CreateUserSchema.safeParse(values);
 
   if (!validateFields.success) return { error: "Invalid fields" };

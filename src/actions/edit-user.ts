@@ -31,7 +31,7 @@ export const update = async (
       },
     });
 
-    return { success: "Settings updated" };
+    return user.id;
   } catch (error) {
     return { error: "Something went wrong" };
   }

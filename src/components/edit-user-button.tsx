@@ -1,13 +1,16 @@
 "use client";
 
 import * as z from "zod";
+import { toast } from "sonner";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { UpdateUserSchema } from "@/schemas";
-import { useTransition, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { UserRole } from "@prisma/client";
 import { ExtendedUser } from "@/next-auth";
+import { User, UserRole } from "@prisma/client";
+import { ClipLoader } from "react-spinners";
+import { update } from "@/actions/edit-user";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
@@ -38,15 +41,13 @@ import {
   FormMessage,
   FormControl,
 } from "@/components/ui/form";
-import { update } from "@/actions/update";
-import { toast } from "sonner";
-import { ClipLoader } from "react-spinners";
 
 interface EditUserButtonProps {
   username: string;
   userId: string;
-  userData: ExtendedUser;
+  userData: User;
   children: React.ReactNode;
+  onUserUpdated: () => void;
 }
 
 const EditUserButton = ({
@@ -54,7 +55,9 @@ const EditUserButton = ({
   username,
   children,
   userData,
+  onUserUpdated,
 }: EditUserButtonProps) => {
+
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof UpdateUserSchema>>({
@@ -71,14 +74,12 @@ const EditUserButton = ({
     startTransition(() => {
       const updatedValues = { ...values, id: userId };
       update(updatedValues).then((data) => {
-        if (data?.error) {
-          form.reset();
-          toast.error("Something went wrong");
+        if (!data) {
+          toast.error(data);
+          return;
         }
-        if (data?.success) {
-          form.reset();
-          toast.success("User updated successfully");
-        }
+        toast.success("User updated successfully");
+        onUserUpdated();
       });
     });
   };
@@ -94,7 +95,7 @@ const EditUserButton = ({
           <DialogDescription className="text-center text-balance flex justify-center items-center gap-x-1">
             User
             <span className="text-blue-700 font-semibold text-sm">
-              {username} 
+              {username}
             </span>
           </DialogDescription>
         </DialogHeader>

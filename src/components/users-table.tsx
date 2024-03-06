@@ -1,15 +1,16 @@
 "use client";
 
 import { toast } from "sonner";
-import { loadUsers } from "@/lib/data";
-import { ExtendedUser } from "@/next-auth";
-import { ClipLoader } from "react-spinners";
+import { User } from "@prisma/client";
+import Loading from "@/components/loading";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { fetchFilteredUsers } from "@/lib/data";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-errors";
 import { PencilIcon, TrashIcon } from "lucide-react";
+import { handleDeleteUser } from "@/actions/delete-user";
 import EditUserButton from "@/components/edit-user-button";
 import DeleteUserButton from "@/components/delete-user-button";
 
@@ -22,35 +23,40 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const UsersTable = ({ query }: { query: string }) => {
-  const [users, setUsers] = useState<ExtendedUser[] | null>(null);
+const UsersTable = ({
+  query,
+  currentPage,
+}: {
+  query: string;
+  currentPage: number;
+}) => {
+  const [users, setUsers] = useState<User[]>();
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const data = await loadUsers(query);
+      const data = await fetchFilteredUsers(query, currentPage);
       if (data) {
         setUsers(data);
       }
     };
     fetchUsers();
-  }, [query]);
+  }, [query, currentPage]);
 
-  const handleDeleteUser = async (userId: string) => {
-    try {
-      const response = await fetch(`/api/users/${userId}`, {
-        method: "DELETE",
-      });
-      const data = await response.json();
-      if (response.ok) {
-        toast.success("User deleted successfully");
-        if (users) {
-          setUsers(users.filter((user) => user.id !== userId));
-        }
-      } else {
-        console.log(data.error);
-      }
-    } catch (error) {
-      return null;
+  const handleDeleteUserClick = async (userId: string) => {
+    const deletedUserId = await handleDeleteUser(userId);
+    if (deletedUserId) {
+      toast.success("User deleted successfully");
+      const updatedUsers =
+        users?.filter((user) => user.id !== deletedUserId) || [];
+
+      setUsers(updatedUsers);
+    }
+  };
+
+  const userUpdated = async () => {
+    const data = await fetchFilteredUsers(query, currentPage);
+    if (data) {
+      setUsers(data);
     }
   };
 
@@ -70,17 +76,7 @@ const UsersTable = ({ query }: { query: string }) => {
       </TableHeader>
       <TableBody className="bg-white text-black w-full">
         {!users ? (
-          <TableRow className="w-full text-center">
-            <TableCell
-              colSpan={6}
-              className="mx-auto py-6 text-muted-foreground w-full"
-            >
-              <div className="flex justify-center items-center w-full text-lg">
-                <ClipLoader size="18px" className="mr-2" />
-                Loading users...
-              </div>
-            </TableCell>
-          </TableRow>
+          <Loading />
         ) : users?.length === 0 ? (
           <TableRow className="w-full text-center">
             <TableCell
@@ -121,6 +117,7 @@ const UsersTable = ({ query }: { query: string }) => {
                     userData={user}
                     userId={user.id as string}
                     username={user.name as string}
+                    onUserUpdated={userUpdated}
                   >
                     <Button
                       variant="ghost"
@@ -133,7 +130,7 @@ const UsersTable = ({ query }: { query: string }) => {
                 <div className="flex justify-center items-center gap-1">
                   <DeleteUserButton
                     username={user.name as string}
-                    onClick={() => handleDeleteUser(user.id as string)}
+                    onClick={() => handleDeleteUserClick(user.id as string)}
                   >
                     <Button
                       variant="ghost"

@@ -7,12 +7,12 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 const INTERVAL = 100;
 
 const Search = ({ placeholder }: { placeholder: string }) => {
+  
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchParams = useSearchParams();
 
   const handleSearch = useDebouncedCallback((term: string) => {
-    // console.log(`Searching for: ${term}`);
 
     const params = new URLSearchParams(searchParams.toString());
 
@@ -20,8 +20,6 @@ const Search = ({ placeholder }: { placeholder: string }) => {
 
     if (term) params.set("query", term);
     else params.delete("query");
-
-    // console.log(params.toString());
 
     replace(`${pathname}?${params.toString()}`);
   }, INTERVAL);

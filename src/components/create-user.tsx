@@ -8,6 +8,7 @@ import { useTransition, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ClipLoader } from "react-spinners";
+import { UserRoundPlus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { create } from "@/actions/create-user";
 import { Button } from "@/components/ui/button";
@@ -15,7 +16,6 @@ import { Switch } from "@/components/ui/switch";
 import { FormError } from "@/components/form-errors";
 import { FormSuccess } from "@/components/form-success";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { UserRoundPlus } from "lucide-react";
 
 import {
   Form,
@@ -51,14 +51,11 @@ const CreateUserForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof CreateUserSchema>) => {
-    setError("");
-    setSuccess("");
-
     startTransition(() => {
       create(values)
         .then((data) => {
-           setError(data.error);
-           setSuccess(data.success);
+          setError(data.error);
+          setSuccess(data.success);
         })
         .catch(() => setError("Something went wrong"));
     });
