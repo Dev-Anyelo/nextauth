@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { USERS_PER_PAGE } from "@/app/api/users/route";
+import { USERS_PER_PAGE } from "@/constants";
 import { unstable_noStore as noStore } from "next/cache";
 
 export const fetchFilteredUsers = async (

@@ -1,7 +1,6 @@
 import { db } from "@/lib/db";
+import { USERS_PER_PAGE } from "@/constants";
 import { NextResponse, NextRequest } from "next/server";
-
-export const USERS_PER_PAGE = 4;
 
 export async function GET(request: NextRequest) {
   try {
