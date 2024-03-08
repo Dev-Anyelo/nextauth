@@ -21,7 +21,7 @@ const Social = () => {
   return (
     <div className="flex justify-center items-center w-full gap-x-2">
       <Button
-        size="lg"
+        size="sm"
         className="w-full"
         variant="outline"
         onClick={() => onClick("google")}
@@ -29,7 +29,7 @@ const Social = () => {
         <FcGoogle size={20} />
       </Button>
       <Button
-        size="lg"
+        size="sm"
         className="w-full"
         variant="outline"
         onClick={() => onClick("github")}

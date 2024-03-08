@@ -64,14 +64,24 @@ const UsersTable = ({
     <Table className="w-full mx-auto shadow-lg rounded-lg overflow-hidden">
       <TableHeader className="bg-gray-100 text-center">
         <TableRow>
-          <TableHead className="w-[100px] px-4 py-2">ID</TableHead>
-          <TableHead className="px-4 py-2 text-center">Role</TableHead>
-          <TableHead className="px-4 py-2">Name</TableHead>
-          <TableHead className="px-4 py-2 text-center">Email</TableHead>
-          <TableHead className="text-center px-4 py-2">
+          <TableHead className="w-[100px] px-2 sm:px-4 py-2 text-xs md:text-base">
+            ID
+          </TableHead>
+          <TableHead className="px-2 sm:px-4 py-2 text-center text-xs md:text-base">
+            Role
+          </TableHead>
+          <TableHead className="px-2 sm:px-4 py-2 text-xs md:text-base">
+            Name
+          </TableHead>
+          <TableHead className="px-2 sm:px-4 py-2 text-center text-xs md:text-base">
+            Email
+          </TableHead>
+          <TableHead className="text-center px-2 sm:px-4 py-2 text-xs md:text-base">
             Two Factor Authentication
           </TableHead>
-          <TableHead className="px-4 py-2 text-center">Actions</TableHead>
+          <TableHead className="px-2 sm:px-4 py-2 text-center text-xs md:text-base">
+            Actions
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody className="bg-white text-black w-full">
@@ -83,16 +93,16 @@ const UsersTable = ({
               colSpan={6}
               className="mx-auto py-6 text-gray-700 w-full"
             >
-              <div className="w-full flex justify-center items-center gap-2 text-muted-foreground text-lg">
+              <div className="w-full flex justify-center items-center gap-2 text-muted-foreground text-sm sm:text-lg">
                 <FormError message="No users found" />
               </div>
             </TableCell>
           </TableRow>
         ) : (
           users?.map((user) => (
-            <TableRow key={user.id} className="w-full">
-              <TableCell className="px-4 py-2">{user.id}</TableCell>
-              <TableCell className="px-4 py-2 text-center">
+            <TableRow key={user.id} className="w-full text-xs md:text-base">
+              <TableCell className="px-2 sm:px-4 py-2">{user.id}</TableCell>
+              <TableCell className="px-2 sm:px-4 py-2 text-center">
                 <Badge
                   variant="secondary"
                   className={`${
@@ -104,14 +114,14 @@ const UsersTable = ({
                   {user.role}
                 </Badge>
               </TableCell>
-              <TableCell className="px-4 py-2">{user.name}</TableCell>
-              <TableCell className="px-4 py-2 text-center">
+              <TableCell className="px-2 sm:px-4 py-2">{user.name}</TableCell>
+              <TableCell className="px-2 sm:px-4 py-2 text-center">
                 {user.email}
               </TableCell>
-              <TableCell className="px-4 py-2 text-center">
+              <TableCell className="px-2 sm:px-4 py-2 text-center">
                 <Switch disabled checked={user.isTwoFactorEnabled} />
               </TableCell>
-              <TableCell className="px-4 py-2 flex justify-center gap-x-5 items-center">
+              <TableCell className="px-2 sm:px-4 py-2 flex justify-center gap-x-5 items-center">
                 <div className="flex justify-center items-center gap-1">
                   <EditUserButton
                     userData={user}

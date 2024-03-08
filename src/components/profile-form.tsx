@@ -16,9 +16,8 @@ import { Switch } from "@/components/ui/switch";
 import { FormError } from "@/components/form-errors";
 import { FormSuccess } from "@/components/form-success";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { useCurrentRole } from "@/hooks/use-current-role";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { RefreshCcwIcon, SettingsIcon, UserIcon } from "lucide-react";
+import { RefreshCcwIcon, UserCheck2Icon, UserIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import {
@@ -42,7 +41,6 @@ import {
 const ProfileForm = () => {
   const user = useCurrentUser();
   const { update } = useSession();
-  const userRole = useCurrentRole();
   const [isPending, startTransition] = useTransition();
 
   const [error, setError] = useState<string | undefined>();
@@ -79,10 +77,10 @@ const ProfileForm = () => {
   };
 
   return (
-    <Card className="w-full max-w-[950px] mx-auto mt-20 shadow-lg rounded-lg overflow-hidden">
+    <Card className="w-fit sm:w-full max-w-[950px] mx-auto mt-20 shadow-lg rounded-lg overflow-hidden">
       <CardHeader className="bg-gray-100 text-center py-4 text-2xl font-semibold flex justify-center items-center">
-        <div className="w-full flex justify-center items-center gap-x-2">
-          <SettingsIcon className="w-6 h-6 inline" />
+        <div className="w-full flex justify-center items-center gap-x-2 text-muted-foreground">
+          <UserCheck2Icon className="w-6 h-6 inline" />
           Profile
         </div>
       </CardHeader>

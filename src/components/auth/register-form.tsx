@@ -57,8 +57,8 @@ const RegisterForm = () => {
       backbButtonHref="/auth/login"
     >
       <Form {...form}>
-        <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="space-y-4">
+        <form className="space-y-3 sm:space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="space-y-2 sm:space-y-4">
             <FormField
               name="name"
               control={form.control}

@@ -1,12 +1,8 @@
-import Link from "next/link";
+"use client";
 
-import { 
-  LogOutIcon, 
-  ServerIcon, 
-  SettingsIcon, 
-  UserIcon, 
-  UsersIcon
-} from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,13 +11,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { LogOutIcon, UserCog, UserIcon } from "lucide-react";
 import { LogoutButton } from "@/components/auth/logout-button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const UserButton = () => {
   const user = useCurrentUser();
+  const pathname = usePathname();
 
   return (
     <DropdownMenu>
@@ -38,7 +36,17 @@ const UserButton = () => {
           <span>{user?.name}</span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-       
+        <DropdownMenuItem
+          className={pathname === "/settings" ? "bg-sky-50" : ""}
+        >
+          <Link href="/settings">
+            <UserCog
+              className="mr-2 text-muted-foreground inline"
+              size="18px"
+            />
+            Profile
+          </Link>
+        </DropdownMenuItem>
         <LogoutButton>
           <DropdownMenuItem>
             <LogOutIcon className="h-4 w-4 mr-2" />

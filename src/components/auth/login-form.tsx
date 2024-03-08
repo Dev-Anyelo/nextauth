@@ -78,12 +78,12 @@ const LoginForm = () => {
     <CardWrapper
       headerLabel="Welcome back"
       backbButtonHref="/auth/register"
-      backButtonLabel="Don't have an account?"
+      backButtonLabel="Don't have an account? Register"
       showSocial
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 sm:space-y-6">
+          <div className="space-y-2 sm:space-y-4">
             {showTwoFactor && (
               <FormField
                 control={form.control}

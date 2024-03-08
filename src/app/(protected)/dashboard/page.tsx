@@ -22,13 +22,14 @@ const DashboardPage = async ({
   const totalUsers = await fetchTotalUsers();
 
   return (
-    <Card className="w-full max-w-7xl mx-auto mt-20 shadow-lg rounded-lg overflow-hidden">
+    <Card className="w-[600px] sm:w-full max-w-7xl mx-auto mt-20 shadow-lg rounded-lg overflow-hidden">
       <CardHeaderDashboard />
-      <CardContent className="p-6 flex justify-between items-center">
+      <CardContent className="py-3 sm:p-6 flex gap-x-3 justify-between items-center">
         <p className="text-gray-500">Users ({totalUsers})</p>
         <Search placeholder="Search" />
         <Link href="/create">
           <Button
+            size="sm"
             variant="default"
             className="bg-blue-700 hover:bg-blue-700/85"
           >
@@ -37,7 +38,7 @@ const DashboardPage = async ({
         </Link>
       </CardContent>
       <UsersTable query={query} currentPage={currentPage} />
-      <CardFooter className="h-full w-full flex justify-end items-center py-4">
+      <CardFooter className="h-full w-full flex justify-end items-center py-2 sm:py-4">
         <PaginationComponent totalPages={totalPages} />
       </CardFooter>
     </Card>

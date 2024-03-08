@@ -25,7 +25,7 @@ const Search = ({ placeholder }: { placeholder: string }) => {
   }, INTERVAL);
 
   return (
-    <div className="relative flex flex-1 flex-shrink-0 max-w-[700px]">
+    <div className="relative flex flex-1 flex-shrink-0 max-w-[400px] sm:max-w-[700px]">
       <input
         className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray text-black focus:outline-none focus:border-gray-300"
         placeholder={placeholder}

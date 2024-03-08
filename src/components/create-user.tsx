@@ -62,9 +62,9 @@ const CreateUserForm = () => {
   };
 
   return (
-    <Card className="w-full max-w-[950px] mx-auto mt-20 shadow-lg rounded-lg overflow-hidden">
+    <Card className="w-fit sm:w-full max-w-[950px] mx-auto mt-20 shadow-lg rounded-lg overflow-hidden">
       <CardHeader className="bg-gray-100 text-center py-4 text-2xl font-semibold flex justify-center items-center">
-        <div className="w-full flex justify-center items-center gap-x-2">
+        <div className="w-full flex justify-center items-center gap-x-2 text-muted-foreground">
           <UserRoundPlus className="w-6 h-6 inline" />
           Create user
         </div>
